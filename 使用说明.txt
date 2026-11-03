@@ -1,0 +1,33 @@
+﻿游戏日志抓取工具（Windows）
+
+使用方法
+1. 连接手机，开启 USB 调试，并在手机上允许本电脑调试。
+2. 双击 Game_Logcat.bat。
+3. 工具自动查找可用 adb。未找到时弹窗询问是否安装：Yes/是下载安装，No/否退出。
+4. 看到“正在抓取设备”后打开游戏，复现问题。
+5. 关闭抓取窗口即可停止，已写入日志保留。
+
+输出文件
+%USERPROFILE%\game_logcat.txt
+例如：C:\Users\Krisu_M\game_logcat.txt
+每次抓取先清空手机历史日志，再覆盖旧文件。要保留上一次结果，请先复制旧文件。
+清空手机日志失败时停止抓取，不覆盖已有日志。
+
+adb 查找与安装
+查找 PATH、ANDROID_HOME、ANDROID_SDK_ROOT、常见安装目录，以及本工具旁边的 adb.exe 或 platform-tools 文件夹。
+也会检查 G:\AllDownload\platform-tools 等常见安装位置。
+自定义目录中的 adb 如果没有加入 PATH 或 SDK 配置，可能无法自动找到；可将其加入 PATH。
+自动安装目录：%LOCALAPPDATA%\GameLogcat\platform-tools
+不需要管理员权限。下次运行会自动使用已安装的 adb。
+首次自动安装需要访问 Google 官方下载服务器 dl.google.com。
+官方下载与许可条款：https://developer.android.com/tools/releases/platform-tools
+
+连接异常
+没有可用设备时，按提示处理后按 Enter 重试，或输入 Q 退出。
+多台可用设备时输入序号选择目标。
+同一会话只允许启动一个抓取工具，避免覆盖正在写入的日志。
+
+实现与验证
+单个 BAT 文件，使用 Windows 自带 Windows PowerShell 5.1，无需另装 Python 或运行环境。
+已检查 PowerShell 语法与 BAT 启动，并通过模拟安装、设备选择、覆盖旧日志、清空失败等分支测试。
+已由用户验证 adb 自动安装及 Android 真机短时抓取，并检查生成日志。
